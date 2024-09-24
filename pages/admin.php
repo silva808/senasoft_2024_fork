@@ -9,6 +9,11 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
     <!-- jquery and ajax -->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <?php
+      require_once '../backend/config/db_connection.php';
+      include_once '../backend/class/Bike.php';
+      include_once '../backend/class/Region.php';
+    ?>
 </head>
 <body>
     <!-- header -->
@@ -43,7 +48,7 @@
               </div>
             </div>
           </nav>
-    <!-- agregar bicicleta -->
+    <!-- add bike -->
     <div id="addBike" class="container-fluid">
         <h4>Agregar bicicleta</h4>
         <form id="form_bike">
@@ -62,7 +67,7 @@
             <label>Disponibilidad: </label>
             <select name="bike_availability">
                 <option value="1">Disponible</option>
-                <option value="2">Ocupado</option>
+                <option value="0">Ocupado</option>
             </select>
             <br>
             <br>
@@ -72,6 +77,66 @@
             <button type="submit" class="btn btn-primary">Agregar</button>
         </form>
     </div>
+    <!-- rent bike -->
+    <div id="addBike" class="container-fluid">
+        <h4>Alquilar bicicleta</h4>
+        <form id="form_rent_bike">
+            <label>Regional: </label>
+            <select name="rent_region">
+              <?php
+                $region = new Region($conn);
+
+                $getregion = $region -> getRegions();
+                foreach($getregion as $regions){
+
+              ?>
+                <option value="<?php echo $regions['id'];?>"><?php echo $regions['department'];?></option>
+
+                <?php
+                    }
+              ?>
+            </select>
+            <br>
+            <br>
+            <label>Bicicleta: </label>
+            <select name="rent_brand">
+              <?php
+                $bike = new Bike($conn);
+
+                $getbikes = $bike -> getBikes();
+                foreach($getbikes as $bikes){
+
+              ?>
+                <option value="<?php echo $bikes['id'];?>"><?php echo $bikes['brand']." ".$bikes['color'];?></option>
+
+                <?php
+                    }
+              ?>
+            </select>
+            <br>
+            <br>
+            <label>Color: </label>
+            <input type="text" name="bike_color" placeholder="Ejemplo: Verde">
+            <br>
+            <br>
+            <label>Condición: </label>
+            <input type="text" name="bike_condition" placeholder="Ejemplo: Excelente estado">
+            <br>
+            <br>
+            <label>Disponibilidad: </label>
+            <select name="bike_availability">
+                <option value="1">Disponible</option>
+                <option value="0">Ocupado</option>
+            </select>
+            <br>
+            <br>
+            <label>Precio de Alquiler: $</label>
+            <input type="text" name="bike_price" placeholder="9999">
+            <br>
+            <button type="submit" class="btn btn-primary">Agregar</button>
+        </form>
+    </div>
+    
 </body>
 <script src="../javascript/admin.js"></script>
 </html>

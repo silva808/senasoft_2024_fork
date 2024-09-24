@@ -2,10 +2,10 @@
 -- version 5.2.1
 -- https://www.phpmyadmin.net/
 --
--- Servidor: 127.0.0.1
--- Tiempo de generación: 24-09-2024 a las 21:34:18
--- Versión del servidor: 10.4.32-MariaDB
--- Versión de PHP: 8.2.12
+-- Host: 127.0.0.1
+-- Generation Time: Sep 25, 2024 at 01:01 AM
+-- Server version: 10.4.32-MariaDB
+-- PHP Version: 8.2.12
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -18,13 +18,13 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Base de datos: `senabike`
+-- Database: `senabike`
 --
 
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `bikes`
+-- Table structure for table `bikes`
 --
 
 CREATE TABLE `bikes` (
@@ -36,10 +36,19 @@ CREATE TABLE `bikes` (
   `rent_price` float NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Dumping data for table `bikes`
+--
+
+INSERT INTO `bikes` (`id`, `brand`, `color`, `bike_condition`, `availability`, `rent_price`) VALUES
+(4, 'GW', 'Verde', 'Excelente', 1, 100000),
+(5, 'GW', 'Rojo', 'Regular', 1, 10000),
+(8, 'GW', 'Blanco', 'Regular', 0, 121212);
+
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `discounts`
+-- Table structure for table `discounts`
 --
 
 CREATE TABLE `discounts` (
@@ -52,7 +61,7 @@ CREATE TABLE `discounts` (
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `economic_status`
+-- Table structure for table `economic_status`
 --
 
 CREATE TABLE `economic_status` (
@@ -63,7 +72,7 @@ CREATE TABLE `economic_status` (
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `likes`
+-- Table structure for table `likes`
 --
 
 CREATE TABLE `likes` (
@@ -75,7 +84,7 @@ CREATE TABLE `likes` (
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `posts`
+-- Table structure for table `posts`
 --
 
 CREATE TABLE `posts` (
@@ -88,7 +97,29 @@ CREATE TABLE `posts` (
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `rentals`
+-- Table structure for table `regions`
+--
+
+CREATE TABLE `regions` (
+  `id` int(11) NOT NULL,
+  `department` text NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `regions`
+--
+
+INSERT INTO `regions` (`id`, `department`) VALUES
+(1, 'caqueta'),
+(2, 'risaralda'),
+(3, 'antioquia'),
+(4, 'huila'),
+(5, 'quindio');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `rentals`
 --
 
 CREATE TABLE `rentals` (
@@ -96,8 +127,8 @@ CREATE TABLE `rentals` (
   `bike_id` int(11) NOT NULL,
   `user_id` int(11) NOT NULL,
   `date` date NOT NULL,
-  `origin` text NOT NULL,
-  `destination` text NOT NULL,
+  `origin_region_id` int(11) NOT NULL,
+  `destination_region_id` int(11) NOT NULL,
   `discount_id` int(11) NOT NULL,
   `final_price` float NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
@@ -105,7 +136,7 @@ CREATE TABLE `rentals` (
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `role`
+-- Table structure for table `role`
 --
 
 CREATE TABLE `role` (
@@ -113,15 +144,24 @@ CREATE TABLE `role` (
   `role_name` text NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Dumping data for table `role`
+--
+
+INSERT INTO `role` (`id`, `role_name`) VALUES
+(1, 'admin'),
+(2, 'user');
+
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `users`
+-- Table structure for table `users`
 --
 
 CREATE TABLE `users` (
   `id` int(11) NOT NULL,
   `role_id` int(11) NOT NULL,
+  `region.id` int(11) NOT NULL,
   `name` text NOT NULL,
   `email` varchar(99) NOT NULL,
   `phone_number` text NOT NULL,
@@ -130,30 +170,30 @@ CREATE TABLE `users` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Índices para tablas volcadas
+-- Indexes for dumped tables
 --
 
 --
--- Indices de la tabla `bikes`
+-- Indexes for table `bikes`
 --
 ALTER TABLE `bikes`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indices de la tabla `discounts`
+-- Indexes for table `discounts`
 --
 ALTER TABLE `discounts`
   ADD PRIMARY KEY (`id`),
   ADD KEY `economic_id` (`economic_id`);
 
 --
--- Indices de la tabla `economic_status`
+-- Indexes for table `economic_status`
 --
 ALTER TABLE `economic_status`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indices de la tabla `likes`
+-- Indexes for table `likes`
 --
 ALTER TABLE `likes`
   ADD PRIMARY KEY (`id`),
@@ -161,117 +201,78 @@ ALTER TABLE `likes`
   ADD KEY `post_id` (`post_id`);
 
 --
--- Indices de la tabla `posts`
+-- Indexes for table `posts`
 --
 ALTER TABLE `posts`
   ADD PRIMARY KEY (`id`),
   ADD KEY `user_id` (`user_id`);
 
 --
--- Indices de la tabla `rentals`
+-- Indexes for table `regions`
 --
-ALTER TABLE `rentals`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `bike_id` (`bike_id`,`user_id`,`discount_id`),
-  ADD KEY `user_id` (`user_id`),
-  ADD KEY `discount_id` (`discount_id`);
+ALTER TABLE `regions`
+  ADD PRIMARY KEY (`id`);
 
 --
--- Indices de la tabla `role`
+-- Indexes for table `rentals`
+--
+ALTER TABLE `rentals`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `role`
 --
 ALTER TABLE `role`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indices de la tabla `users`
+-- Indexes for table `users`
 --
 ALTER TABLE `users`
   ADD PRIMARY KEY (`id`),
   ADD KEY `role_id` (`role_id`),
-  ADD KEY `economic_id` (`economic_id`);
+  ADD KEY `economic_id` (`economic_id`),
+  ADD KEY `region.id` (`region.id`);
 
 --
--- AUTO_INCREMENT de las tablas volcadas
+-- AUTO_INCREMENT for dumped tables
 --
 
 --
--- AUTO_INCREMENT de la tabla `bikes`
+-- AUTO_INCREMENT for table `bikes`
 --
 ALTER TABLE `bikes`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
--- AUTO_INCREMENT de la tabla `economic_status`
+-- AUTO_INCREMENT for table `economic_status`
 --
 ALTER TABLE `economic_status`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT de la tabla `likes`
+-- AUTO_INCREMENT for table `likes`
 --
 ALTER TABLE `likes`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT de la tabla `posts`
+-- AUTO_INCREMENT for table `posts`
 --
 ALTER TABLE `posts`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT de la tabla `rentals`
+-- AUTO_INCREMENT for table `rentals`
 --
 ALTER TABLE `rentals`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT de la tabla `role`
+-- AUTO_INCREMENT for table `role`
 --
 ALTER TABLE `role`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
-
---
--- Restricciones para tablas volcadas
---
-
---
--- Filtros para la tabla `bikes`
---
-ALTER TABLE `bikes`
-  ADD CONSTRAINT `bikes_ibfk_1` FOREIGN KEY (`id`) REFERENCES `rentals` (`bike_id`);
-
---
--- Filtros para la tabla `discounts`
---
-ALTER TABLE `discounts`
-  ADD CONSTRAINT `discounts_ibfk_1` FOREIGN KEY (`economic_id`) REFERENCES `economic_status` (`id`);
-
---
--- Filtros para la tabla `likes`
---
-ALTER TABLE `likes`
-  ADD CONSTRAINT `likes_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`),
-  ADD CONSTRAINT `likes_ibfk_2` FOREIGN KEY (`post_id`) REFERENCES `posts` (`id`);
-
---
--- Filtros para la tabla `posts`
---
-ALTER TABLE `posts`
-  ADD CONSTRAINT `posts_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`);
-
---
--- Filtros para la tabla `rentals`
---
-ALTER TABLE `rentals`
-  ADD CONSTRAINT `rentals_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`),
-  ADD CONSTRAINT `rentals_ibfk_2` FOREIGN KEY (`discount_id`) REFERENCES `discounts` (`id`);
-
---
--- Filtros para la tabla `users`
---
-ALTER TABLE `users`
-  ADD CONSTRAINT `users_ibfk_1` FOREIGN KEY (`role_id`) REFERENCES `role` (`id`),
-  ADD CONSTRAINT `users_ibfk_2` FOREIGN KEY (`economic_id`) REFERENCES `economic_status` (`id`);
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
