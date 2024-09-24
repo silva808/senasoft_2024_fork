@@ -1,0 +1,10 @@
+body{
+    height: 100vh !important;
+}
+form{
+    border-radius: 15px;
+}
+.custom-input-login{
+    border: none;
+    outline: none;
+}

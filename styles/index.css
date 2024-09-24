@@ -1,0 +1,59 @@
+*{
+    font-family: "Buenard";
+}
+.custom-bg-header{
+    background-color: #090808;
+}
+.nav-link, .navbar-brand{
+    font-size: 1.2rem;
+    color: white !important;
+}
+
+.custom-logo {
+    width: 2.5rem;
+}
+.custom-btn-sesion{
+    background-color: white;
+    color: black !important;
+    border-radius: 20px;
+    border: none;
+    outline: none;
+}
+.custom-btn-sesion:hover{
+    background-color: #F26104;
+    color: white !important;
+    transition: 0.4s
+}
+.navbar-toggler{
+    color: white !important;
+    background-color: white !important;
+}
+.custom-bg-orange{
+    background-color: #F26104;
+}
+.custom-btn-registrarse{
+    background-color: #F26104;
+    color: white;
+    border: none;
+    border-radius: 20px;
+    font-size: 1.1rem;
+}
+.custom-description-header{
+    font-size: 0.9rem;
+    width: 80% !important;
+}
+.custom-size-exs{
+    width: 3.5rem;
+}
+.custom-welcome{
+    font-size: 2.7rem;
+    font-weight: 700;
+}
+.custom-bike{
+    width: 50rem;
+}
+@media (max-width: 768px){
+    .custom-welcome{
+        font-size: 1.5rem;
+    }
+}
