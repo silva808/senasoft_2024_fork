@@ -1,0 +1,11 @@
+body{
+    height: 100vh !important;
+}
+form{
+    border-radius: 15px;
+}
+
+.custom-input-register{
+    border: none;
+    outline: none;
+}
