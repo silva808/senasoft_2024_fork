@@ -19,10 +19,11 @@ $(document).ready(function(){
            data: $(this).serialize(),
            success: function(response){
             console.log(response);
+
             if (response === 'admin') {
                 // Si el servidor indica que es un administrador
-                window.location.href = '../pages/aprendiz.php';
-            } else if (response === 'user') {
+                window.location.href = '../pages/admin.php';
+            } else if (response === 'Aprendiz') {
                 console.log("caray");
 
                 // Si el servidor indica que es un usuario normal
@@ -64,7 +65,7 @@ $(document).ready(function(){
         type: 'post',
         success: function(data){
             if(data){
-                window.location.href='../index.html';
+                window.location.href='../index.php';
             }
         }
     });

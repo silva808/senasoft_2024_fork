@@ -1,3 +1,12 @@
+<?php
+    session_start();
+    if (!isset($_SESSION['idUser'])) {
+        echo "hola";
+        // Redirección a index.html
+        header('Location: .././index.php');
+        exit(); // Asegúrate de que el script se detenga después de la redirección
+    }
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -6,6 +15,14 @@
     <title>Admin Page</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+    <!-- link jquery y ajax -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+    <!-- map de leaflet CSS y JS -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
     <link rel="stylesheet" href="../styles/admin.css">
 </head>
 <body>
@@ -31,18 +48,25 @@
                 <a href="#manage_bikes"><div class="p-3 options d-flex justify-content-center">
                     Gestionar Bicicletas
                 </div></a>
-                <a href="#publish_event"><div class="p-3 options d-flex justify-content-center">
-                    Publicar un Evento
-                </div></a>
+                <a href="#publish_event">
+                    <div class="p-3 options d-flex justify-content-center">
+                        Publicar un Evento
+                    </div>
+                </a>
+                <a href="#map_interactive">
+                    <div class="p-3 options d-flex justify-content-center">
+                        Mapa interactivo
+                    </div>
+                </a>
             </div>
             <div class="py-4 d-flex justify-content-center w-100 my-5">
                 <div class="dropdown">
                     <a href="#" class="d-flex align-items-center text-decoration-none dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
                         <img src="https://github.com/mdo.png" alt="" width="32" height="32" class="rounded-circle me-2">
-                        <strong><?php echo $_SESSION['name']; ?></strong>
+                        <strong><?php echo $_SESSION['name']; ?>- Administrador</strong>
                     </a>
                     <ul class="dropdown-menu dropdown-menu-dark text-small shadow">
-                        <li><a class="dropdown-item" href="#" id="sing-out">Sign out</a></li>
+                        <li><p class="dropdown-item" id="sing-out">Sign out</p></li>
                     </ul>
                 </div>
             </div>
@@ -77,25 +101,16 @@
 
                 <!-- Gestionar Bicicletas -->
                 <div class="cont-main d-flex" id="manage_bikes">
-                    <div class="container p-5">
-                        <h2>Gestionar Bicicletas</h2>
-                        <div class="row row-gap-3">
-                            <!-- Cards of bicycles with options to edit or delete -->
-                            <div class="col-md-4 d-flex justify-content-around">
-                                <div class="card">
-                                    <img src="https://gwbicycles.com/cdn/shop/files/1-negra-2_1800x1800.jpg?v=1726761027" class="card-img-top" alt="Bicicleta">
-                                    <div class="card-body">
-                                        <h5 class="card-title">Bicicleta 700 Berlín GW</h5>
-                                        <p class="card-text">Disponibilidad: Si</p>
-                                        <a href="#" class="btn btn-green">Editar</a>
-                                        <a href="#" class="btn btn-outline-danger">Eliminar</a>
-                                    </div>
-                                </div>
-                            </div>
-                            <!-- Add more cards for each bike -->
+                <div class="container p-5">
+                    <h2>Gestionar Bicicletas</h2>
+                    <div class="row">
+                        <div class="col-12">
+                            <?php include('../templates/bike_tables.php'); ?>
                         </div>
                     </div>
                 </div>
+            </div>
+
 
                 <!-- Publicar un Evento -->
                 <div class="cont-main d-flex flex-column" id="publish_event">
@@ -118,9 +133,18 @@
                         </form>
                     </div>
                 </div>
+
+                <!--Mapa interactivo -->
+                <div class="cont-main d-flex flex-column" id="map_interactive">
+                    <div class="container p-5">
+                        <?php include('../templates/map.php'); ?>
+                    </div>
+                </div>
             </main>
         </div>
     </div>
 </body>
 <script src="../javascript/admin.js"></script>
+<script src="../js/ajax.js"></script>
+
 </html>

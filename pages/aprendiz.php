@@ -4,7 +4,8 @@
     
         echo "hola";
         // Redirección a index.html
-        header('Location: .././index.html');
+        header('Location: .././index.php');
+        // si no ha iniciado sesion que aparezca un not found 404
         exit(); // Asegúrate de que el script se detenga después de la redirección
     }
 ?>
@@ -21,14 +22,14 @@
     <!-- link css y icons bootstrap -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
-    <link rel="stylesheet" href="../styles/UI.css">
+    <link rel="stylesheet" href="../styles/aprendiz.css">
 </head>
 <body>
     <div class="container-fluid d-flex">
         <div class="sidebar shadow d-flex w-25 flex-column align-items-center justify-content-between">
             <div class="p-5 mb-5 w-100 d-flex justify-content-center align-items-center gap-3">
                 <img src="https://www.sena.edu.co/Style%20Library/alayout/images/logoSena.png" style="width: 4rem;">
-                <a href="#" class="fs-4">SenaBike <?php echo $_SESSION['department']; ?></a>
+                <!-- <a href="#" class="fs-4">SenaBike <?php echo $_SESSION['department']; ?></a> -->
             </div>
             <div class="w-100 py-3">
                     <a href="#rent_bike"><div class="p-3 options d-flex justify-content-center">
@@ -154,5 +155,6 @@
         </div>
     </div>
     <script src="../js/ajax.js"></script>
+    <script src=""></script>
 </body>
 </html>

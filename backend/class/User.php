@@ -48,6 +48,21 @@ class User{
         return false; // Credenciales inválidas
     }
 
+    // public function getUserByBike($bike_id){
+    //     try{
+    //         $sql = $this->db_connect->prepare("SELECT * FROM users INNER JOIN rentals ON users.id = rentals.user_id WHERE rentals.bike_id = ?");
+    //         $sql->bind_param("i", $bike_id); 
+    //         $sql->execute(); 
+              
+    //         $resultado = $sql->get_result()->fetch_assoc();   
+    //         if ($resultado) {
+    //             return $resultado;
+    //         }
+    //         return false;
+    //     }catch(Exception $e){
+    //         echo $e->getMessage();
+    //     }
+    // }
 
         // por arreglar agregar usuarios aunque no seria necesario que se puediera crear la cuenta ya que se manejaria la bd del sena hipoteticamente
     public function createUser($name, $iduser, $telefono, $estrato, $email, $password, $regional){

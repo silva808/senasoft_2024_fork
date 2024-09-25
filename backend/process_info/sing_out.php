@@ -2,5 +2,5 @@
 session_start();
 session_unset();
 session_destroy();
-echo "<script>window.location='../index.html'</script>";
+echo "<script>window.location='../index.php'</script>";
 ?>
