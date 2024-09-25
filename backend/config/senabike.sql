@@ -2,10 +2,10 @@
 -- version 5.2.1
 -- https://www.phpmyadmin.net/
 --
--- Host: 127.0.0.1
--- Generation Time: Sep 25, 2024 at 01:01 AM
--- Server version: 10.4.32-MariaDB
--- PHP Version: 8.2.12
+-- Servidor: 127.0.0.1
+-- Tiempo de generación: 25-09-2024 a las 21:14:47
+-- Versión del servidor: 10.4.32-MariaDB
+-- Versión de PHP: 8.2.12
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -18,13 +18,13 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `senabike`
+-- Base de datos: `senabike`
 --
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `bikes`
+-- Estructura de tabla para la tabla `bikes`
 --
 
 CREATE TABLE `bikes` (
@@ -37,7 +37,7 @@ CREATE TABLE `bikes` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Dumping data for table `bikes`
+-- Volcado de datos para la tabla `bikes`
 --
 
 INSERT INTO `bikes` (`id`, `brand`, `color`, `bike_condition`, `availability`, `rent_price`) VALUES
@@ -48,7 +48,7 @@ INSERT INTO `bikes` (`id`, `brand`, `color`, `bike_condition`, `availability`, `
 -- --------------------------------------------------------
 
 --
--- Table structure for table `discounts`
+-- Estructura de tabla para la tabla `discounts`
 --
 
 CREATE TABLE `discounts` (
@@ -61,7 +61,7 @@ CREATE TABLE `discounts` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `economic_status`
+-- Estructura de tabla para la tabla `economic_status`
 --
 
 CREATE TABLE `economic_status` (
@@ -69,10 +69,17 @@ CREATE TABLE `economic_status` (
   `economic_name` text NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Volcado de datos para la tabla `economic_status`
+--
+
+INSERT INTO `economic_status` (`id`, `economic_name`) VALUES
+(1, '1');
+
 -- --------------------------------------------------------
 
 --
--- Table structure for table `likes`
+-- Estructura de tabla para la tabla `likes`
 --
 
 CREATE TABLE `likes` (
@@ -84,7 +91,7 @@ CREATE TABLE `likes` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `posts`
+-- Estructura de tabla para la tabla `posts`
 --
 
 CREATE TABLE `posts` (
@@ -97,7 +104,7 @@ CREATE TABLE `posts` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `regions`
+-- Estructura de tabla para la tabla `regions`
 --
 
 CREATE TABLE `regions` (
@@ -106,7 +113,7 @@ CREATE TABLE `regions` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Dumping data for table `regions`
+-- Volcado de datos para la tabla `regions`
 --
 
 INSERT INTO `regions` (`id`, `department`) VALUES
@@ -119,16 +126,17 @@ INSERT INTO `regions` (`id`, `department`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `rentals`
+-- Estructura de tabla para la tabla `rentals`
 --
 
 CREATE TABLE `rentals` (
   `id` int(11) NOT NULL,
   `bike_id` int(11) NOT NULL,
   `user_id` int(11) NOT NULL,
-  `date` date NOT NULL,
-  `origin_region_id` int(11) NOT NULL,
-  `destination_region_id` int(11) NOT NULL,
+  `date_started` date NOT NULL,
+  `date_final` int(11) NOT NULL,
+  `origin_start` text NOT NULL,
+  `final_destination` text NOT NULL,
   `discount_id` int(11) NOT NULL,
   `final_price` float NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
@@ -136,7 +144,7 @@ CREATE TABLE `rentals` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `role`
+-- Estructura de tabla para la tabla `role`
 --
 
 CREATE TABLE `role` (
@@ -145,23 +153,24 @@ CREATE TABLE `role` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Dumping data for table `role`
+-- Volcado de datos para la tabla `role`
 --
 
 INSERT INTO `role` (`id`, `role_name`) VALUES
 (1, 'admin'),
-(2, 'user');
+(2, 'Aprendiz'),
+(3, 'Funcionario');
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `users`
+-- Estructura de tabla para la tabla `users`
 --
 
 CREATE TABLE `users` (
   `id` int(11) NOT NULL,
   `role_id` int(11) NOT NULL,
-  `region.id` int(11) NOT NULL,
+  `region_id` int(11) NOT NULL,
   `name` text NOT NULL,
   `email` varchar(99) NOT NULL,
   `phone_number` text NOT NULL,
@@ -170,30 +179,37 @@ CREATE TABLE `users` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Indexes for dumped tables
+-- Volcado de datos para la tabla `users`
+--
+
+INSERT INTO `users` (`id`, `role_id`, `region_id`, `name`, `email`, `phone_number`, `password`, `economic_id`) VALUES
+(1, 1, 1, 'Maria Alejandra', 'prueba@gmail.com', '3209489684', '123', 1);
+
+--
+-- Índices para tablas volcadas
 --
 
 --
--- Indexes for table `bikes`
+-- Indices de la tabla `bikes`
 --
 ALTER TABLE `bikes`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `discounts`
+-- Indices de la tabla `discounts`
 --
 ALTER TABLE `discounts`
   ADD PRIMARY KEY (`id`),
   ADD KEY `economic_id` (`economic_id`);
 
 --
--- Indexes for table `economic_status`
+-- Indices de la tabla `economic_status`
 --
 ALTER TABLE `economic_status`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `likes`
+-- Indices de la tabla `likes`
 --
 ALTER TABLE `likes`
   ADD PRIMARY KEY (`id`),
@@ -201,78 +217,99 @@ ALTER TABLE `likes`
   ADD KEY `post_id` (`post_id`);
 
 --
--- Indexes for table `posts`
+-- Indices de la tabla `posts`
 --
 ALTER TABLE `posts`
   ADD PRIMARY KEY (`id`),
   ADD KEY `user_id` (`user_id`);
 
 --
--- Indexes for table `regions`
+-- Indices de la tabla `regions`
 --
 ALTER TABLE `regions`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `rentals`
+-- Indices de la tabla `rentals`
 --
 ALTER TABLE `rentals`
-  ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `bike_id` (`bike_id`,`user_id`),
+  ADD KEY `user_id` (`user_id`);
 
 --
--- Indexes for table `role`
+-- Indices de la tabla `role`
 --
 ALTER TABLE `role`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `users`
+-- Indices de la tabla `users`
 --
 ALTER TABLE `users`
   ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `economic_id_2` (`economic_id`),
   ADD KEY `role_id` (`role_id`),
   ADD KEY `economic_id` (`economic_id`),
-  ADD KEY `region.id` (`region.id`);
+  ADD KEY `region.id` (`region_id`);
 
 --
--- AUTO_INCREMENT for dumped tables
+-- AUTO_INCREMENT de las tablas volcadas
 --
 
 --
--- AUTO_INCREMENT for table `bikes`
+-- AUTO_INCREMENT de la tabla `bikes`
 --
 ALTER TABLE `bikes`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
--- AUTO_INCREMENT for table `economic_status`
+-- AUTO_INCREMENT de la tabla `economic_status`
 --
 ALTER TABLE `economic_status`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
--- AUTO_INCREMENT for table `likes`
+-- AUTO_INCREMENT de la tabla `likes`
 --
 ALTER TABLE `likes`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT for table `posts`
+-- AUTO_INCREMENT de la tabla `posts`
 --
 ALTER TABLE `posts`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT for table `rentals`
+-- AUTO_INCREMENT de la tabla `rentals`
 --
 ALTER TABLE `rentals`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT for table `role`
+-- AUTO_INCREMENT de la tabla `role`
 --
 ALTER TABLE `role`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
+--
+-- Restricciones para tablas volcadas
+--
+
+--
+-- Filtros para la tabla `rentals`
+--
+ALTER TABLE `rentals`
+  ADD CONSTRAINT `rentals_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  ADD CONSTRAINT `rentals_ibfk_2` FOREIGN KEY (`bike_id`) REFERENCES `bikes` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+
+--
+-- Filtros para la tabla `users`
+--
+ALTER TABLE `users`
+  ADD CONSTRAINT `users_ibfk_1` FOREIGN KEY (`region_id`) REFERENCES `regions` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  ADD CONSTRAINT `users_ibfk_2` FOREIGN KEY (`role_id`) REFERENCES `role` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

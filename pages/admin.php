@@ -3,140 +3,124 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SenaBike ADMIN</title>
-    <!-- bootstrap link -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
-    <!-- jquery and ajax -->
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <?php
-      require_once '../backend/config/db_connection.php';
-      include_once '../backend/class/Bike.php';
-      include_once '../backend/class/Region.php';
-    ?>
+    <title>Admin Page</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <link rel="stylesheet" href="../styles/admin.css">
 </head>
 <body>
-    <!-- header -->
-    <header>
-        <nav class="navbar navbar-expand-lg">
-            <div class="container-fluid">
-              <a class="title navbar-brand fs-1 fw-semibold p-5" href="#">SenaBike</a>
-              <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-              </button>
-              <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                <ul class="item navbar-nav ms-auto mb-2 mb-lg-0 fs-4 px-5">
-                  <li class="nav-item">
-                    <a class="nav-link" aria-current="page" href="#">Ganancias</a>
-                  </li>
-                  <li class="nav-item">
-                    <a class="nav-link" href="#">Gestionar Bicicletas</a>
-                  </li>
-                  <li class="nav-item">
-                    <a class="nav-link" href="#">Crear evento</a>
-                  </li>
-                  <li class="nav-item">
-                    <a class="nav-link" href="#">Agregar usuario</a>
-                  </li>
-                  <li class="nav-item">
-                    <a class="nav-link" href="#">Alquilar bicicleta</a>
-                  </li>
-                  <li class="nav-item">
-                    <a class="nav-link" href="#">Agregar Bicicleta</a>
-                  </li>
-                </ul>
-              </div>
+    <div class="container-fluid d-flex">
+        <div class="sidebar shadow d-flex w-25 flex-column align-items-center justify-content-between">
+            <div class="p-5 mb-5 w-100 d-flex flex-column align-items-center">
+                <div class="cont-admin d-flex align-items-center gap-2">
+                    <div class="cont-img d-flex justify-content-center">
+                        <img src="https://www.sena.edu.co/Style%20Library/alayout/images/logoSena.png" style="width: 5rem;" class="img-fluid">
+                    </div>
+                    <div class="cont-reg">
+                        <a href="#" class="fs-2">SenaBike</a>
+                        <p>Regional Caquetá</p>
+                    </div>
+                    
+                </div>
+                
             </div>
-          </nav>
-    <!-- add bike -->
-    <div id="addBike" class="container-fluid">
-        <h4>Agregar bicicleta</h4>
-        <form id="form_bike">
-            <label>Marca: </label>
-            <input type="text" name="bike_brand" placeholder="Ejemplo: GW">
-            <br>
-            <br>
-            <label>Color: </label>
-            <input type="text" name="bike_color" placeholder="Ejemplo: Verde">
-            <br>
-            <br>
-            <label>Condición: </label>
-            <input type="text" name="bike_condition" placeholder="Ejemplo: Excelente estado">
-            <br>
-            <br>
-            <label>Disponibilidad: </label>
-            <select name="bike_availability">
-                <option value="1">Disponible</option>
-                <option value="0">Ocupado</option>
-            </select>
-            <br>
-            <br>
-            <label>Precio de Alquiler: $</label>
-            <input type="text" name="bike_price" placeholder="9999">
-            <br>
-            <button type="submit" class="btn btn-primary">Agregar</button>
-        </form>
+            <div class="w-100 py-3">
+                <a href="#earnings"><div class="p-3 options d-flex justify-content-center">
+                    Ver Ganancias
+                </div></a>
+                <a href="#manage_bikes"><div class="p-3 options d-flex justify-content-center">
+                    Gestionar Bicicletas
+                </div></a>
+                <a href="#publish_event"><div class="p-3 options d-flex justify-content-center">
+                    Publicar un Evento
+                </div></a>
+            </div>
+            <div class="py-4 d-flex justify-content-center w-100 my-5">
+                <div class="dropdown">
+                    <a href="#" class="d-flex align-items-center text-decoration-none dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                        <img src="https://github.com/mdo.png" alt="" width="32" height="32" class="rounded-circle me-2">
+                        <strong><?php echo $_SESSION['name']; ?></strong>
+                    </a>
+                    <ul class="dropdown-menu dropdown-menu-dark text-small shadow">
+                        <li><a class="dropdown-item" href="#" id="sing-out">Sign out</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="w-75 d-flex">
+            <main class="w-100 d-flex flex-column">
+                <!-- Ver Ganancias -->
+                <div class="cont-main d-flex" id="earnings">
+                    <div class="container p-5">
+                        <h2>Ver Ganancias</h2>
+                        <p>Detalles de las ganancias generadas hasta ahora...</p>
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th scope="col">Fecha</th>
+                                    <th scope="col">Total</th>
+                                    <th scope="col">Descripción</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>2024-09-20</td>
+                                    <td>$200,000</td>
+                                    <td>Alquiler bicicletas</td>
+                                </tr>
+                                <!-- Add more rows here -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- Gestionar Bicicletas -->
+                <div class="cont-main d-flex" id="manage_bikes">
+                    <div class="container p-5">
+                        <h2>Gestionar Bicicletas</h2>
+                        <div class="row row-gap-3">
+                            <!-- Cards of bicycles with options to edit or delete -->
+                            <div class="col-md-4 d-flex justify-content-around">
+                                <div class="card">
+                                    <img src="https://gwbicycles.com/cdn/shop/files/1-negra-2_1800x1800.jpg?v=1726761027" class="card-img-top" alt="Bicicleta">
+                                    <div class="card-body">
+                                        <h5 class="card-title">Bicicleta 700 Berlín GW</h5>
+                                        <p class="card-text">Disponibilidad: Si</p>
+                                        <a href="#" class="btn btn-green">Editar</a>
+                                        <a href="#" class="btn btn-outline-danger">Eliminar</a>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- Add more cards for each bike -->
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Publicar un Evento -->
+                <div class="cont-main d-flex flex-column" id="publish_event">
+                    <div class="container p-5">
+                        <h2>Publicar un Evento</h2>
+                        <form>
+                            <div class="mb-3">
+                                <label for="event_title" class="form-label">Título del Evento</label>
+                                <input type="text" class="form-control" id="event_title">
+                            </div>
+                            <div class="mb-3">
+                                <label for="event_date" class="form-label">Fecha del Evento</label>
+                                <input type="date" class="form-control" id="event_date">
+                            </div>
+                            <div class="mb-3">
+                                <label for="event_description" class="form-label">Descripción</label>
+                                <textarea class="form-control" id="event_description" rows="3"></textarea>
+                            </div>
+                            <button type="submit" class="btn btn-green">Publicar</button>
+                        </form>
+                    </div>
+                </div>
+            </main>
+        </div>
     </div>
-    <!-- rent bike -->
-    <div id="addBike" class="container-fluid">
-        <h4>Alquilar bicicleta</h4>
-        <form id="form_rent_bike">
-            <label>Regional: </label>
-            <select name="rent_region">
-              <?php
-                $region = new Region($conn);
-
-                $getregion = $region -> getRegions();
-                foreach($getregion as $regions){
-
-              ?>
-                <option value="<?php echo $regions['id'];?>"><?php echo $regions['department'];?></option>
-
-                <?php
-                    }
-              ?>
-            </select>
-            <br>
-            <br>
-            <label>Bicicleta: </label>
-            <select name="rent_brand">
-              <?php
-                $bike = new Bike($conn);
-
-                $getbikes = $bike -> getBikes();
-                foreach($getbikes as $bikes){
-
-              ?>
-                <option value="<?php echo $bikes['id'];?>"><?php echo $bikes['brand']." ".$bikes['color'];?></option>
-
-                <?php
-                    }
-              ?>
-            </select>
-            <br>
-            <br>
-            <label>Color: </label>
-            <input type="text" name="bike_color" placeholder="Ejemplo: Verde">
-            <br>
-            <br>
-            <label>Condición: </label>
-            <input type="text" name="bike_condition" placeholder="Ejemplo: Excelente estado">
-            <br>
-            <br>
-            <label>Disponibilidad: </label>
-            <select name="bike_availability">
-                <option value="1">Disponible</option>
-                <option value="0">Ocupado</option>
-            </select>
-            <br>
-            <br>
-            <label>Precio de Alquiler: $</label>
-            <input type="text" name="bike_price" placeholder="9999">
-            <br>
-            <button type="submit" class="btn btn-primary">Agregar</button>
-        </form>
-    </div>
-    
 </body>
 <script src="../javascript/admin.js"></script>
 </html>

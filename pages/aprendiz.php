@@ -6,7 +6,7 @@
     <title>Document</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
-    <link rel="stylesheet" href="../styles/UI.css">
+    <link rel="stylesheet" href="../styles/aprendiz.css">
 </head>
 <body>
     <div class="container-fluid d-flex">
@@ -50,7 +50,7 @@
                                 <div class="card-body">
                                     <h5 class="card-title">Bicicleta 700 Berlín GW</h5>
                                     <p class="card-text">Estado: Buenas condiciones<br>Disponibilidad: Sí<br><strong>Precio Alquiler: $40.000</strong></p>
-                                    <div class="d-flex justify-content-between">
+                                    <div class="d-flex justify-content-evenly">
                                         <a href="#" class="btn btn-outline-green">Ver detalles</a>
                                         <a href="#" class="btn btn-green">Alquilar</a>
                                     </div>
@@ -64,7 +64,7 @@
                                 <div class="card-body">
                                     <h5 class="card-title">Bicicleta 700 Berlín GW</h5>
                                     <p class="card-text">Estado: Buenas condiciones<br>Disponibilidad: Sí<br><strong>Precio Alquiler: $40.000</strong></p>
-                                    <div class="d-flex justify-content-between">
+                                    <div class="d-flex justify-content-evenly">
                                         <a href="#" class="btn btn-outline-green">Ver detalles</a>
                                         <a href="#" class="btn btn-green">Alquilar</a>
                                     </div>
@@ -78,7 +78,7 @@
                                 <div class="card-body">
                                     <h5 class="card-title">Bicicleta 700 Berlín GW</h5>
                                     <p class="card-text">Estado: Buenas condiciones<br>Disponibilidad: Sí<br><strong>Precio Alquiler: $40.000</strong></p>
-                                    <div class="d-flex justify-content-between">
+                                    <div class="d-flex justify-content-evenly">
                                         <a href="#" class="btn btn-outline-green">Ver detalles</a>
                                         <a href="#" class="btn btn-green">Alquilar</a>
                                     </div>
@@ -165,4 +165,5 @@
         </div>
     </div>
 </body>
+<script src="../javascript/aprendiz.js"></script>
 </html>

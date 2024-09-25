@@ -12,7 +12,11 @@ a{
 }
 .options:hover{
     cursor: pointer;
-    background-color: var(--green);
+    background-color: var(--light_green);
+    color: white;
+}
+.options.active {
+    background-color: var(--light_green);
     color: white;
 }
 
