@@ -26,7 +26,7 @@ $(document).ready(function(){
                 console.log("caray");
 
                 // Si el servidor indica que es un usuario normal
-                window.location.href = '../pages/user.php';
+                window.location.href = '../pages/aprendiz.php';
             } else {
                 // Si hubo un error o el usuario no existe
                 $('#error').html(response);
