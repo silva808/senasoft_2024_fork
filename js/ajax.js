@@ -19,11 +19,9 @@ $(document).ready(function(){
            data: $(this).serialize(),
            success: function(response){
             console.log(response);
-            console.log("mirar datos");
             if (response === 'admin') {
-                console.log("admin");
                 // Si el servidor indica que es un administrador
-                window.location.href = '../pages/admin.php';
+                window.location.href = '../pages/aprendiz.php';
             } else if (response === 'user') {
                 console.log("caray");
 
@@ -73,12 +71,12 @@ $(document).ready(function(){
 });
  
 
-$(document).on('click', '', function(){
-    $.ajax({
-        url: '../backend/process_info/alquilar.php',
-        type: 'post',
-        success: function(data){
-            console.log(data);
-        }
-    });
-});
+// $(document).on('click', '', function(){
+//     $.ajax({
+//         url: '../backend/process_info/alquilar.php',
+//         type: 'post',
+//         success: function(data){
+//             console.log(data);
+//         }
+//     });
+// });

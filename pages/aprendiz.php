@@ -1,9 +1,24 @@
+<?php
+    session_start();
+    if (!isset($_SESSION['idUser'])) {
+    
+        echo "hola";
+        // Redirección a index.html
+        header('Location: .././index.html');
+        exit(); // Asegúrate de que el script se detenga después de la redirección
+    }
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <!-- link jquery y ajax -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+    <!-- link css y icons bootstrap -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="../styles/UI.css">
@@ -13,7 +28,7 @@
         <div class="sidebar shadow d-flex w-25 flex-column align-items-center justify-content-between">
             <div class="p-5 mb-5 w-100 d-flex justify-content-center align-items-center gap-3">
                 <img src="https://www.sena.edu.co/Style%20Library/alayout/images/logoSena.png" style="width: 4rem;">
-                <a href="#" class="fs-4">SenaBike</a>
+                <a href="#" class="fs-4">SenaBike <?php echo $_SESSION['department']; ?></a>
             </div>
             <div class="w-100 py-3">
                     <a href="#rent_bike"><div class="p-3 options d-flex justify-content-center">
@@ -30,7 +45,7 @@
                 <div class="dropdown">
                     <a href="#" class="d-flex align-items-center text-decoration-none dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
                         <img src="https://github.com/mdo.png" alt="" width="32" height="32" class="rounded-circle me-2">
-                        <strong><?php echo $_SESSION['name']; ?></strong>
+                        <strong>  <?php echo $_SESSION['name']; ?> - Aprendiz</strong>
                     </a>
                     <ul class="dropdown-menu dropdown-menu-dark text-small shadow">
                         <li><a class="dropdown-item" href="#" id="sing-out">Sign out</a></li>
@@ -41,50 +56,24 @@
         <div class="w-75 d-flex">
             <main class="w-100 d-flex flex-column">
                 <div class="cont-main d-flex flex-column p-3" id="rent_bike">
+
                     <h3 class="text-center mb-4">Alquilar Bicicletas</h3>
                     <div class="row row-gap-3">
                         <!-- Bike Card 1 -->
-                        <div class="col-md-4 col-sm-6 d-flex justify-content-center">
-                            <div class="card bike-card">
-                                <img src="https://gwbicycles.com/cdn/shop/files/1-negra-2_1800x1800.jpg?v=1726761027" class="card-img-top img-fluid" alt="Bicicleta 700 Berlín GW">
-                                <div class="card-body">
-                                    <h5 class="card-title">Bicicleta 700 Berlín GW</h5>
-                                    <p class="card-text">Estado: Buenas condiciones<br>Disponibilidad: Sí<br><strong>Precio Alquiler: $40.000</strong></p>
-                                    <div class="d-flex justify-content-between">
-                                        <a href="#" class="btn btn-outline-green">Ver detalles</a>
-                                        <a href="#" class="btn btn-green">Alquilar</a>
+                            <div class="col-md-4 col-sm-6 d-flex justify-content-center">
+                                <div class="card bike-card">
+                                    <img src="https://gwbicycles.com/cdn/shop/files/1-negra-2_1800x1800.jpg?v=1726761027" class="card-img-top img-fluid" alt="Bicicleta 700 Berlín GW">
+                                    <div class="card-body">
+                                        <h5 class="card-title">Bicicleta 700 Berlín GW</h5>
+                                        <p class="card-text">Estado: Buenas condiciones<br>Disponibilidad: Sí<br><strong>Precio Alquiler: $40.000</strong></p>
+                                        <div class="d-flex justify-content-between">
+                                            <a href="#" class="btn btn-outline-green">Ver detalles</a>
+                                            <a href="#" class="btn btn-green">Alquilar</a>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                        <!-- Bike Card 2 -->
-                        <div class="col-md-4 col-sm-6 d-flex justify-content-center">
-                            <div class="card bike-card">
-                                <img src="https://gwbicycles.com/cdn/shop/files/1-negra-2_1800x1800.jpg?v=1726761027" class="card-img-top img-fluid" alt="Bicicleta 700 Berlín GW">
-                                <div class="card-body">
-                                    <h5 class="card-title">Bicicleta 700 Berlín GW</h5>
-                                    <p class="card-text">Estado: Buenas condiciones<br>Disponibilidad: Sí<br><strong>Precio Alquiler: $40.000</strong></p>
-                                    <div class="d-flex justify-content-between">
-                                        <a href="#" class="btn btn-outline-green">Ver detalles</a>
-                                        <a href="#" class="btn btn-green">Alquilar</a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <!-- Bike Card 3 -->
-                        <div class="col-md-4 col-sm-6 d-flex justify-content-center">
-                            <div class="card bike-card">
-                                <img src="https://gwbicycles.com/cdn/shop/files/1-negra-2_1800x1800.jpg?v=1726761027" class="card-img-top img-fluid" alt="Bicicleta 700 Berlín GW">
-                                <div class="card-body">
-                                    <h5 class="card-title">Bicicleta 700 Berlín GW</h5>
-                                    <p class="card-text">Estado: Buenas condiciones<br>Disponibilidad: Sí<br><strong>Precio Alquiler: $40.000</strong></p>
-                                    <div class="d-flex justify-content-between">
-                                        <a href="#" class="btn btn-outline-green">Ver detalles</a>
-                                        <a href="#" class="btn btn-green">Alquilar</a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                        
                     </div>
                 </div>
                 
@@ -164,5 +153,6 @@
             </main>
         </div>
     </div>
+    <script src="../js/ajax.js"></script>
 </body>
 </html>
