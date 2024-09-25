@@ -1,0 +1,64 @@
+:root {
+    --green: #0B7E0B;
+    --light_green: #00AF00;
+}
+
+.card {
+    width: 18rem;
+    border-radius: 20px;
+    border: var(--green) solid 2px;
+}
+
+a {
+    text-decoration: none;
+    color: black;
+}
+
+.options {
+    transition: ease-in-out 0.3s;
+}
+
+.options:hover {
+    cursor: pointer;
+    background-color: var(--green);
+    color: white;
+}
+
+.btn-green {
+    background-color: var(--light_green);
+    border-color: var(--light_green);
+    color: white;
+}
+
+.btn-green:hover {
+    background-color: var(--green);
+    border-color: var(--green);
+}
+
+.cont-main {
+    flex: none;
+    width: 100%;
+    height: 100vh;
+    border: 1px solid black;
+    overflow: auto;
+}
+
+main {
+    height: 100vh;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+}
+
+h2 {
+    color: var(--light_green);
+}
+
+.form-control:focus {
+    border-color: var(--light_green);
+    box-shadow: 0 0 0 0.25rem rgba(0, 175, 0, 0.25);
+}
+
+label {
+    color: var(--light_green);
+}

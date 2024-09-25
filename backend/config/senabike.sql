@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 25-09-2024 a las 15:46:08
+-- Tiempo de generación: 25-09-2024 a las 21:14:47
 -- Versión del servidor: 10.4.32-MariaDB
 -- Versión de PHP: 8.2.12
 
@@ -69,6 +69,13 @@ CREATE TABLE `economic_status` (
   `economic_name` text NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Volcado de datos para la tabla `economic_status`
+--
+
+INSERT INTO `economic_status` (`id`, `economic_name`) VALUES
+(1, '1');
+
 -- --------------------------------------------------------
 
 --
@@ -126,7 +133,8 @@ CREATE TABLE `rentals` (
   `id` int(11) NOT NULL,
   `bike_id` int(11) NOT NULL,
   `user_id` int(11) NOT NULL,
-  `date` date NOT NULL,
+  `date_started` date NOT NULL,
+  `date_final` int(11) NOT NULL,
   `origin_start` text NOT NULL,
   `final_destination` text NOT NULL,
   `discount_id` int(11) NOT NULL,
@@ -150,8 +158,8 @@ CREATE TABLE `role` (
 
 INSERT INTO `role` (`id`, `role_name`) VALUES
 (1, 'admin'),
-(2, 'user'),
-(3, 'funcionario');
+(2, 'Aprendiz'),
+(3, 'Funcionario');
 
 -- --------------------------------------------------------
 
@@ -162,13 +170,20 @@ INSERT INTO `role` (`id`, `role_name`) VALUES
 CREATE TABLE `users` (
   `id` int(11) NOT NULL,
   `role_id` int(11) NOT NULL,
-  `region.id` int(11) NOT NULL,
+  `region_id` int(11) NOT NULL,
   `name` text NOT NULL,
   `email` varchar(99) NOT NULL,
   `phone_number` text NOT NULL,
   `password` varchar(99) NOT NULL,
   `economic_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Volcado de datos para la tabla `users`
+--
+
+INSERT INTO `users` (`id`, `role_id`, `region_id`, `name`, `email`, `phone_number`, `password`, `economic_id`) VALUES
+(1, 1, 1, 'Maria Alejandra', 'prueba@gmail.com', '3209489684', '123', 1);
 
 --
 -- Índices para tablas volcadas
@@ -233,9 +248,10 @@ ALTER TABLE `role`
 --
 ALTER TABLE `users`
   ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `economic_id_2` (`economic_id`),
   ADD KEY `role_id` (`role_id`),
   ADD KEY `economic_id` (`economic_id`),
-  ADD KEY `region.id` (`region.id`);
+  ADD KEY `region.id` (`region_id`);
 
 --
 -- AUTO_INCREMENT de las tablas volcadas
@@ -251,7 +267,7 @@ ALTER TABLE `bikes`
 -- AUTO_INCREMENT de la tabla `economic_status`
 --
 ALTER TABLE `economic_status`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT de la tabla `likes`
@@ -292,9 +308,8 @@ ALTER TABLE `rentals`
 -- Filtros para la tabla `users`
 --
 ALTER TABLE `users`
-  ADD CONSTRAINT `users_ibfk_1` FOREIGN KEY (`region.id`) REFERENCES `regions` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  ADD CONSTRAINT `users_ibfk_2` FOREIGN KEY (`role_id`) REFERENCES `role` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  ADD CONSTRAINT `users_ibfk_3` FOREIGN KEY (`economic_id`) REFERENCES `economic_status` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+  ADD CONSTRAINT `users_ibfk_1` FOREIGN KEY (`region_id`) REFERENCES `regions` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  ADD CONSTRAINT `users_ibfk_2` FOREIGN KEY (`role_id`) REFERENCES `role` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
