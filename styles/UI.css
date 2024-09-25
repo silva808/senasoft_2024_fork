@@ -27,7 +27,6 @@ main {
     flex: none; /* Ensure the .cont-main takes up remaining space */
     width: 100%;
     height: 100%;
-    border: 1px solid black;
     overflow-y: auto; /* Allow vertical scrolling when content overflows */
 }
 
