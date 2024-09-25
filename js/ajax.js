@@ -1,3 +1,4 @@
+// para manejar los modales o notificaciones esta en espera 
 $(document).on('click', '.custom-btn-sesion', function(){
     $.ajax({
         url: '.././templates/login.html',
@@ -57,6 +58,7 @@ $(document).ready(function(){
         });
     });
  });
+ 
 //  ajax para cerrar sesión 
  $(document).on('click', '#sing-out', function(){
     $.ajax({
@@ -66,6 +68,17 @@ $(document).ready(function(){
             if(data){
                 window.location.href='../index.html';
             }
+        }
+    });
+});
+ 
+
+$(document).on('click', '', function(){
+    $.ajax({
+        url: '../backend/process_info/alquilar.php',
+        type: 'post',
+        success: function(data){
+            console.log(data);
         }
     });
 });

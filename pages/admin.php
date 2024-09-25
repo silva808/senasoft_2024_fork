@@ -19,7 +19,7 @@
     <!-- link jquery y ajax -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    
+
     <link rel="stylesheet" href="../styles/bruh.css">
 </head>
 <body>
@@ -91,7 +91,7 @@
                                 <div class="d-flex justify-content-center">
                                     <div class="btn-group" aria-label="Basic outlined example">
                                         <button type="button" class="btn detail-btn btn-outline-success">Ver detalles</button>
-                                        <button type="button" class="btn rent-btn btn-success py-1">Alquilar</button>
+                                        <button type="button" class="btn rent-btn btn-success py-1" id="alquilar" >Alquilar</button>
                                     </div>
                                 </div>
                             </div>
