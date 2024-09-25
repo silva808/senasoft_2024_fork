@@ -8,32 +8,27 @@ class User{
     }
 
     public function getUser($id){
-        $sql = "SELECT * FROM users WHERE id = ?";
-        $stmt = $this ->$db_connect -> prepare($sql);
-        $stmt -> bind_param("i", $id);
-        $stmt -> execute();
-        $result = $stmt -> get_result();
-        $row = $result -> fetch_assoc();
-        return $row;
+      
     }
 
     public function validateUser($id, $email, $password){
         try{
             // Consulta preparada
-            $Sql = $this->db_connect->prepare("SELECT id, email, password FROM users WHERE id = ? AND email = ? AND password = ? ");
+            $sql = $this->db_connect->prepare("SELECT id, name, role_id, email, password FROM users WHERE id = ? AND email = ? AND password = ? ");
                             
             // Vinculación de parámetros
-            $Sql->bind_param("iss", $id, $email, $password);
+            $sql->bind_param("iss", $id, $email, $password);
                     
             // Ejecutar la consulta
-            $Sql->execute();
+            $sql->execute();
+                // Obtener los resultados
+            $resultado = $sql->get_result()->fetch_assoc();
 
-            // Obtener los resultados
-            if($Resultado = $Sql->get_result()->fetch_assoc()){
-                //array_push($Datos,$Resultado['hora_inicio']);
-                return $Resultado['id'];
+            if ($resultado) {
+                return $resultado; // Se encontró el usuario y la contraseña coincide
             }
-                return false;
+            return false; // No se encontró el usuario o la contraseña es incorrecta
+
         }catch(Exception $e){
             echo $e->getMessage();
         }

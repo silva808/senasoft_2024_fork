@@ -8,6 +8,7 @@ $(document).on('click', '.custom-btn-sesion', function(){
     });
 });
 
+// validar usuario
 $(document).ready(function(){
    $('#form-login').on('submit', function(e){
        e.preventDefault();
@@ -15,19 +16,28 @@ $(document).ready(function(){
            url: '../backend/process_info/validateUser.php',
            type: 'post',
            data: $(this).serialize(),
-           success: function(data){
+           success: function(response){
+            console.log(response);
             console.log("mirar datos");
-            console.log(data);
-            //    if(data == 'Usuario no existe'){
-            //        $('#error').html(data);
-            //    }else{
-            //        $('.modal-content').html(data);
-            //    }
-           }
+            if (response === 'admin') {
+                console.log("admin");
+                // Si el servidor indica que es un administrador
+                window.location.href = '../pages/admin.php';
+            } else if (response === 'user') {
+                console.log("caray");
+
+                // Si el servidor indica que es un usuario normal
+                window.location.href = '../pages/user.php';
+            } else {
+                // Si hubo un error o el usuario no existe
+                $('#error').html(response);
+            }
+           },
        });
    });
 });
 
+// ajax para registrar un usuario
 $(document).ready(function(){
     $('#form-register').on('submit', function(e){
         e.preventDefault();
@@ -47,3 +57,15 @@ $(document).ready(function(){
         });
     });
  });
+//  ajax para cerrar sesión 
+ $(document).on('click', '#sing-out', function(){
+    $.ajax({
+        url: '../backend/process_info/sing_out.php',
+        type: 'post',
+        success: function(data){
+            if(data){
+                window.location.href='../index.html';
+            }
+        }
+    });
+});
