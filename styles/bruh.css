@@ -1,0 +1,36 @@
+:root{
+    --green: #0B7E0B;
+    --light_green: #00AF00;
+}
+
+.card{
+    width: 15rem;
+    border-radius: 20px;
+    border: var(--green) solid 2px;
+}
+
+.detail-btn, .rent-btn{
+    border-radius: 25px;
+    border: var(--light_green) solid 1px;
+}
+
+.rent-btn{
+    background-color: var(--light_green);
+}
+
+a{
+    text-decoration: none;
+    color: black;
+}
+.options {
+    transition: ease-in-out 0.3s;
+}
+.options:hover{
+    cursor: pointer;
+    background-color: var(--green);
+    color: white;
+}
+
+.card img {
+    width: 10rem;
+}
