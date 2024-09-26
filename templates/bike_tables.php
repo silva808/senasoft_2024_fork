@@ -14,9 +14,9 @@ $bikeList = $bikes->getBikes(); // Obtener las bicicletas desde la base de datos
             <tr>
                 <th scope="col">Imagen</th>
                 <th scope="col">Nombre</th>
-                <th scope="col">color</th>
+                <th scope="col">Color</th>
                 <th scope="col">Disponibilidad</th>
-                <th scope="col">condición</th>
+                <th scope="col">Condición</th>
                 <th scope="col">Precio alquiler</th>
 
                 <th scope="col">Acciones</th>
@@ -25,7 +25,7 @@ $bikeList = $bikes->getBikes(); // Obtener las bicicletas desde la base de datos
         <tbody>
             <?php foreach ($bikeList as $bike): ?>
                 <!-- Asignar clase 'table-success' si la disponibilidad es 'Si' -->
-                <tr class="<?= $bike['availability'] === 1 ? 'table-success' : ''; ?>">
+                <tr class="<?= $bike['availability'] === 1 ? 'table-success' : 'table-danger'; ?>">
                     <td>
                         <!-- <img src="<?= $bike['imagen'] ?>" alt="Bicicleta" width="100"> -->
                     </td>
@@ -33,7 +33,7 @@ $bikeList = $bikes->getBikes(); // Obtener las bicicletas desde la base de datos
                     <td><?= $bike['color'] ?></td>
                     <td><?= $bike['availability']  === 1 ? 'Sí' : 'No'; ?></td>
                     <td><?= $bike['bike_condition'] ?></td>
-                    <td>$<?= $bike['price_by_km'] ?></td>
+                    <td>$<?= $bike['rent_price'] ?></td>
                
                     <td>
                         <a href="#" class="btn btn-green">Editar</a>

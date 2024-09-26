@@ -37,4 +37,20 @@ class Post{
             $query -> close();
         }
     }
+
+    public function deletePost($id){
+        try {
+            $query = $this -> db_connect -> prepare("DELETE FROM posts WHERE id = ?");
+            $query -> bind_param("i", $id);
+            $query -> execute();
+                if($query -> affected_rows > 0){
+                    return true;
+                }
+                return false;
+        } catch (Exception $e) {
+            echo"Error".$e -> getMessage();
+            return false;
+            $query -> close();
+        }
+    }
 }

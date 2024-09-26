@@ -24,6 +24,11 @@
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
     <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
     <link rel="stylesheet" href="../styles/admin.css">
+
+    <?php
+        require_once '../backend/config/db_connection.php';
+        include_once '../backend/class/Rent.php';
+    ?>
 </head>
 <body>
     <div class="container-fluid d-flex">
@@ -53,6 +58,11 @@
                         Publicar un Evento
                     </div>
                 </a>
+                <a href="#event_list">
+                    <div class="p-3 options d-flex justify-content-center">
+                        Ver Eventos
+                    </div>
+                </a>
                 <a href="#map_interactive">
                     <div class="p-3 options d-flex justify-content-center">
                         Mapa interactivo
@@ -66,7 +76,7 @@
                         <strong><?php echo $_SESSION['name']; ?>- Administrador</strong>
                     </a>
                     <ul class="dropdown-menu dropdown-menu-dark text-small shadow">
-                        <li><p class="dropdown-item" id="sing-out">Sign out</p></li>
+                        <li><p href="#" class="dropdown-item" id="sing-out">Sign out</p></li>
                     </ul>
                 </div>
             </div>
@@ -76,24 +86,53 @@
             <main class="w-100 d-flex flex-column">
                 <!-- Ver Ganancias -->
                 <div class="cont-main d-flex" id="earnings">
-                    <div class="container p-5">
+                    <div class="container p-5 d-flex flex-column">
                         <h2>Ver Ganancias</h2>
                         <p>Detalles de las ganancias generadas hasta ahora...</p>
+                        <div class="cont-earnings d-flex column-gap-5">
+                            <?php
+
+                                $rent = new Rent($conn);
+
+                                $value = $rent->SumarPreciosRentalsMesActual();
+
+                                $meses = [
+                                    '01' => 'Enero', '02' => 'Febrero', '03' => 'Marzo', '04' => 'Abril',
+                                    '05' => 'Mayo', '06' => 'Junio', '07' => 'Julio', '08' => 'Agosto',
+                                    '09' => 'Septiembre', '10' => 'Octubre', '11' => 'Noviembre', '12' => 'Diciembre'
+                                ];                            
+                                
+                                $mesActualNumero = date('m'); // Get the month as a number
+                                $anioActualNumero = date('Y'); // Get the year as a number
+                                $mesActualNombre = $meses[$mesActualNumero]; // Get the name in Spanish
+                                $totalEarning = 0;
+                                foreach ($value as $earning){
+                                    $totalEarning += $earning['total']; // Sum each total
+                                }              
+                                echo'<h4><span>'.$mesActualNombre.'</span> - <span>'.$anioActualNumero.'</span></h4> 
+                                    <h4>Total Ganancias: <span>'.number_format($totalEarning, 2).'</span> </h4>
+                                ';
+                            ?>
+                        </div>
+                        <br>
                         <table class="table">
                             <thead>
                                 <tr>
-                                    <th scope="col">Fecha</th>
-                                    <th scope="col">Total</th>
-                                    <th scope="col">Descripción</th>
+                                    <th scope="col">Usuario</th>
+                                    <th scope="col">Valor</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr>
-                                    <td>2024-09-20</td>
-                                    <td>$200,000</td>
-                                    <td>Alquiler bicicletas</td>
-                                </tr>
-                                <!-- Add more rows here -->
+                                <?php
+                                    foreach ($value as $earning){
+                                ?>
+                                    <tr>
+                                        <td><?php echo htmlspecialchars($earning['name']); // Display the user name ?></td>
+                                        <td><?php echo '$' . number_format($earning['total'], 2); // Display the total price ?></td>
+                                    </tr>
+                                <?php
+                                    }
+                                ?>
                             </tbody>
                         </table>
                     </div>
@@ -133,6 +172,15 @@
                         </form>
                     </div>
                 </div>
+
+                <!-- Ver Eventos -->
+                <div class="cont-main d-flex flex-column p-3" id="event_list">
+                <h3 class="text-center mb-4">Ver Eventos</h3>
+                <div class="row row-gap-3">
+                    <!-- Event Card 1 -->
+                    <?php include_once '../templates/postcard_admin.php'; ?>
+                </div>
+            </div>
 
                 <!--Mapa interactivo -->
                 <div class="cont-main d-flex flex-column" id="map_interactive">
