@@ -5,7 +5,6 @@
         echo "hola";
         // Redirección a index.html
         header('Location: .././index.php');
-        // si no ha iniciado sesion que aparezca un not found 404
         exit(); // Asegúrate de que el script se detenga después de la redirección
     }
 ?>
@@ -23,13 +22,20 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="../styles/aprendiz.css">
+     <!-- Leaflet CSS -->
+     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
+    <?php
+        require_once '../backend/config/db_connection.php';
+        include_once '../backend/class/Bike.php';
+        include_once '../backend/class/Post.php';
+    ?>
 </head>
 <body>
     <div class="container-fluid d-flex">
         <div class="sidebar shadow d-flex w-25 flex-column align-items-center justify-content-between">
             <div class="p-5 mb-5 w-100 d-flex justify-content-center align-items-center gap-3">
                 <img src="https://www.sena.edu.co/Style%20Library/alayout/images/logoSena.png" style="width: 4rem;">
-                <!-- <a href="#" class="fs-4">SenaBike <?php echo $_SESSION['department']; ?></a> -->
+                <a href="#" class="fs-4">SenaBike <?php echo $_SESSION['department']; ?></a>
             </div>
             <div class="w-100 py-3">
                     <a href="#rent_bike"><div class="p-3 options d-flex justify-content-center">
@@ -54,27 +60,14 @@
                 </div>
             </div>
         </div>
+
         <div class="w-75 d-flex">
             <main class="w-100 d-flex flex-column">
                 <div class="cont-main d-flex flex-column p-3" id="rent_bike">
 
                     <h3 class="text-center mb-4">Alquilar Bicicletas</h3>
-                    <div class="row row-gap-3">
-                        <!-- Bike Card 1 -->
-                            <div class="col-md-4 col-sm-6 d-flex justify-content-center">
-                                <div class="card bike-card">
-                                    <img src="https://gwbicycles.com/cdn/shop/files/1-negra-2_1800x1800.jpg?v=1726761027" class="card-img-top img-fluid" alt="Bicicleta 700 Berlín GW">
-                                    <div class="card-body">
-                                        <h5 class="card-title">Bicicleta 700 Berlín GW</h5>
-                                        <p class="card-text">Estado: Buenas condiciones<br>Disponibilidad: Sí<br><strong>Precio Alquiler: $40.000</strong></p>
-                                        <div class="d-flex justify-content-between">
-                                            <a href="#" class="btn btn-outline-green">Ver detalles</a>
-                                            <a href="#" class="btn btn-green">Alquilar</a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        
+                    <div class="row row-gap-3 alquilar-bikes">
+                      <?php include_once '../templates/modalrentals.php'; ?>
                     </div>
                 </div>
                 
@@ -115,38 +108,7 @@
                 <h3 class="text-center mb-4">Ver Eventos</h3>
                 <div class="row row-gap-3">
                     <!-- Event Card 1 -->
-                    <div class="col-md-4 col-sm-6 d-flex justify-content-center">
-                        <div class="card event-card">
-                            <div class="card-body">
-                                <h5 class="card-title">Evento Ciclovía Bogotá</h5>
-                                <p class="card-text">Únete a la ciclovía más grande de Bogotá y disfruta de un recorrido especial.</p>
-                                <p class="event-date">Fecha: 25 Septiembre 2024</p>
-                                <a href="#" class="btn btn-green">Ver detalles</a>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- Event Card 2 -->
-                    <div class="col-md-4 col-sm-6 d-flex justify-content-center">
-                        <div class="card event-card">
-                            <div class="card-body">
-                                <h5 class="card-title">Reto en Montaña</h5>
-                                <p class="card-text">Participa en el reto de ciclismo en montaña y demuestra tu resistencia.</p>
-                                <p class="event-date">Fecha: 12 Octubre 2024</p>
-                                <a href="#" class="btn btn-green">Ver detalles</a>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- Event Card 3 -->
-                    <div class="col-md-4 col-sm-6 d-flex justify-content-center">
-                        <div class="card event-card">
-                            <div class="card-body">
-                                <h5 class="card-title">Tour de Antioquia</h5>
-                                <p class="card-text">Acompáñanos en el tour de Antioquia, un evento lleno de paisajes y diversión.</p>
-                                <p class="event-date">Fecha: 5 Noviembre 2024</p>
-                                <a href="#" class="btn btn-green">Ver detalles</a>
-                            </div>
-                        </div>
-                    </div>
+                    <?php include_once '../templates/postcard.php'; ?>
                 </div>
             </div>
             
@@ -154,7 +116,12 @@
             </main>
         </div>
     </div>
+    <!-- js bootstrap -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+   <!-- js leaflet   -->
+    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+
     <script src="../js/ajax.js"></script>
-    <script src=""></script>
+    <script src="../javascript/aprendiz.js"></script>
 </body>
 </html>

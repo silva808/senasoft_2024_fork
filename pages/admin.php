@@ -116,18 +116,18 @@
                 <div class="cont-main d-flex flex-column" id="publish_event">
                     <div class="container p-5">
                         <h2>Publicar un Evento</h2>
-                        <form>
+                        <form id="publish_post">
                             <div class="mb-3">
                                 <label for="event_title" class="form-label">Título del Evento</label>
-                                <input type="text" class="form-control" id="event_title">
+                                <input type="text" class="form-control" name="event_title">
                             </div>
                             <div class="mb-3">
                                 <label for="event_date" class="form-label">Fecha del Evento</label>
-                                <input type="date" class="form-control" id="event_date">
+                                <input type="date" class="form-control" name="event_date">
                             </div>
                             <div class="mb-3">
                                 <label for="event_description" class="form-label">Descripción</label>
-                                <textarea class="form-control" id="event_description" rows="3"></textarea>
+                                <textarea class="form-control" name="event_description" rows="3"></textarea>
                             </div>
                             <button type="submit" class="btn btn-green">Publicar</button>
                         </form>

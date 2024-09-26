@@ -3,9 +3,15 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
+<<<<<<< HEAD
 -- Tiempo de generación: 25-09-2024 a las 21:14:47
 -- Versión del servidor: 10.4.32-MariaDB
 -- Versión de PHP: 8.2.12
+=======
+-- Tiempo de generación: 26-09-2024 a las 10:07:08
+-- Versión del servidor: 10.4.32-MariaDB
+-- Versión de PHP: 8.0.30
+>>>>>>> aleja
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -88,6 +94,14 @@ CREATE TABLE `likes` (
   `post_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Volcado de datos para la tabla `likes`
+--
+
+INSERT INTO `likes` (`id`, `user_id`, `post_id`) VALUES
+(2, 2, 1),
+(1, 2, 2);
+
 -- --------------------------------------------------------
 
 --
@@ -98,8 +112,18 @@ CREATE TABLE `posts` (
   `id` int(11) NOT NULL,
   `title` text NOT NULL,
   `description` text NOT NULL,
+  `date` date NOT NULL,
   `user_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Volcado de datos para la tabla `posts`
+--
+
+INSERT INTO `posts` (`id`, `title`, `description`, `date`, `user_id`) VALUES
+(1, 'Evento Ciclovía Cali', 'lock the fuck in lil bro', '2024-09-30', 1),
+(2, 'Evento Montana Lover', 'fucking lost cause', '2024-11-23', 1),
+(3, 'cali', 'xdddd', '2024-10-06', 1);
 
 -- --------------------------------------------------------
 
@@ -134,12 +158,25 @@ CREATE TABLE `rentals` (
   `bike_id` int(11) NOT NULL,
   `user_id` int(11) NOT NULL,
   `date_started` date NOT NULL,
+<<<<<<< HEAD
   `date_final` int(11) NOT NULL,
   `origin_start` text NOT NULL,
   `final_destination` text NOT NULL,
+=======
+  `date_final` date NOT NULL,
+  `origin_start` varchar(205) NOT NULL,
+  `final_destination` varchar(205) NOT NULL,
+>>>>>>> aleja
   `discount_id` int(11) NOT NULL,
   `final_price` float NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Volcado de datos para la tabla `rentals`
+--
+
+INSERT INTO `rentals` (`id`, `bike_id`, `user_id`, `date_started`, `date_final`, `origin_start`, `final_destination`, `discount_id`, `final_price`) VALUES
+(1, 4, 2, '2024-09-25', '0000-00-00', '1.6134,-75.6063', '', 0, 0);
 
 -- --------------------------------------------------------
 
@@ -183,7 +220,12 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `role_id`, `region_id`, `name`, `email`, `phone_number`, `password`, `economic_id`) VALUES
+<<<<<<< HEAD
 (1, 1, 1, 'Maria Alejandra', 'prueba@gmail.com', '3209489684', '123', 1);
+=======
+(1, 1, 1, 'Maria Alejandra', 'prueba@gmail.com', '3209489684', '123', 1),
+(2, 2, 4, 'jair', 'a@gmail.com', '22323322332', '123', 0);
+>>>>>>> aleja
 
 --
 -- Índices para tablas volcadas
@@ -273,19 +315,19 @@ ALTER TABLE `economic_status`
 -- AUTO_INCREMENT de la tabla `likes`
 --
 ALTER TABLE `likes`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT de la tabla `posts`
 --
 ALTER TABLE `posts`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT de la tabla `rentals`
 --
 ALTER TABLE `rentals`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT de la tabla `role`
@@ -298,6 +340,22 @@ ALTER TABLE `role`
 --
 
 --
+<<<<<<< HEAD
+=======
+-- Filtros para la tabla `likes`
+--
+ALTER TABLE `likes`
+  ADD CONSTRAINT `likes_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  ADD CONSTRAINT `likes_ibfk_2` FOREIGN KEY (`post_id`) REFERENCES `posts` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+
+--
+-- Filtros para la tabla `posts`
+--
+ALTER TABLE `posts`
+  ADD CONSTRAINT `posts_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+
+--
+>>>>>>> aleja
 -- Filtros para la tabla `rentals`
 --
 ALTER TABLE `rentals`

@@ -8,3 +8,37 @@ form{
     border: none;
     outline: none;
 }
+#mensajeError {
+    display: none; /* Oculto inicialmente */
+    position: fixed;
+    top: 90%; /* Pocision del contenedor verticalmente 10% arriba 90%abajo*/
+    left: 50%; /* Centra el contenedor en la pantalla */
+    transform: translate(-50%, -50%);
+    width: 300px;
+    padding: 20px;
+    background-color: white;
+    border-radius: 10px;
+    text-align: center;
+    font-family: Arial, sans-serif;
+    color: #333;
+    box-shadow: 0 4px 15px rgba(255, 0, 0, 0.5); /* Sombra roja */
+    z-index: 1000; 
+    transition: 5s;
+  }
+
+
+  #mostrarMensaje {
+    display: block;
+    margin: 50px auto;
+    padding: 10px 20px;
+    background-color: #ff4d4d;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+  }
+
+  #mostrarMensaje:hover {
+    background-color: #e60000;
+  }

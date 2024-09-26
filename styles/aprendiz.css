@@ -86,6 +86,14 @@ h2 {
     font-weight: bold;
 }
 
+/* Estilo para el botón de "Participando" */
+.btn-gray {
+    background-color: #cccccc;
+    color: #ffffff;
+    cursor: not-allowed;
+}
+
+
 h3 {
     color: var(--green);
 }
