@@ -84,10 +84,10 @@ class Rent{
     
 
       // Método para guardar un alquiler
-      public function saveRental($bike_id, $user_id, $origin_start, $final_destination, $start_date, $total_cost_initial) {
+      public function saveRental($bike_id, $user_id, $origin_start, $final_destination, $start_date) {
         try {
-            $query = $this->db_connect->prepare("INSERT INTO rentals (bike_id, user_id, origin_start, final_destination, date_started, initial_price) VALUES (?, ?, ?, ?, ?, ?)");
-            $query->bind_param("iisssd", $bike_id, $user_id, $origin_start, $final_destination, $start_date, $total_cost_initial);
+            $query = $this->db_connect->prepare("INSERT INTO rentals (bike_id, user_id, origin_start, final_destination, date_started) VALUES ( ?, ?, ?, ?, ?)");
+            $query->bind_param("iisss", $bike_id, $user_id, $origin_start, $final_destination, $start_date);
 
             if ($query->execute()) {
                 return true;

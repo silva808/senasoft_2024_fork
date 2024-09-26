@@ -42,3 +42,13 @@ form{
   #mostrarMensaje:hover {
     background-color: #e60000;
   }
+
+  #ingresar, .btn-verdee{
+    background-color: #00AF00;
+    border: none;
+    color: white;
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    border-radius: 5px;
+  }

@@ -30,8 +30,7 @@ if ($bikes) {
                     </p>
                     <div class="d-flex justify-content-between">
                         <a href="#" class="btn btn-outline-green">Ver detalles</a>
-                        
-                        <button type="button" class="btn btn-green" data-bs-toggle="modal" data-bs-target="#rentModal' . $bike["id"] . '">Alquilar</button>
+                        <button type="button" class="btn btn-green' . ($isRented ? ' hidden' : '') . '" data-bs-toggle="modal" data-bs-target="#rentModal' . $bike["id"] . '"' . ($isRented ? ' disabled' : '') . '>Alquilar</button>
                     </div>
                 </div>
             </div>
@@ -82,5 +81,5 @@ if ($bikes) {
     echo '<p>No hay bicicletas disponibles.</p>';
 }
 ?>
-<!-- <script src="../js/distance_km.js"></script> -->
+<script src="../js/distance_km.js"></script>
 <!-- <button type="button" class="btn btn-green' . ($isRented ? ' hidden' : '') . '" data-bs-toggle="modal" data-bs-target="#rentModal' . $bike["id"] . '"' . ($isRented ? ' disabled' : '') . '>Alquilar</button> -->
