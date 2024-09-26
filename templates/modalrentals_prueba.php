@@ -1,15 +1,16 @@
+
 <?php
 require_once '../backend/config/db_connection.php';
 include_once '../backend/class/Bike.php';
 
-// Instantiate the Bike class
+// Instanciar la clase Bike
 $bikeObj = new Bike($conn);
 
-// Fetch the list of bikes using the getBikes() method
+// Obtener la lista de bicicletas usando el método getBikes()
 $bikes = $bikeObj->getBikes();
 
 if ($bikes) {
-    // Loop through each bike and generate the HTML for the card
+    // Recorrer cada bicicleta y generar el HTML para la tarjeta
     foreach ($bikes as $bike) {
         echo '
         <div class="col-md-4 col-sm-6 d-flex justify-content-center">
@@ -30,7 +31,7 @@ if ($bikes) {
             </div>
         </div>
 
-        <!-- Modal for Rental -->
+        <!-- Modal para Alquiler -->
         <div class="modal fade" id="rentModal' . $bike["id"] . '" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="rentModalLabel' . $bike["id"] . '" aria-hidden="true">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
@@ -40,48 +41,54 @@ if ($bikes) {
                     </div>
 
                     <div class="modal-body">
-                        <form id="rentalForm' . $bike["id"] . '">
+                        <form id="rentalForm' . $bike["id"] . '" method="post" action="process_rental.php">
                             <p> Estado: ' . htmlspecialchars($bike["bike_condition"]) . '</p>
                             <p> ID: ' . htmlspecialchars($bike["id"]) . '</p>
 
-                        
-                            <input type="hidden" id="bikeId" value="' . $bike["id"] . '">
-                            <input type="" id="rentPrice" value="' . $bike["rent_price"] . '">
+                            <input type="hidden" id="bikeId" value="' . $bike["id"] . '" name="bikeId">
+                            <input type="hidden" id="rentPrice" value="' . $bike["rent_price"] . '" name="rentPrice">
 
-                            <!-- Campo para que el usuario ingrese la ubicación -->
                             <label for="location">Ubicación a la que irá (dirección o lugar):</label>
                             <input type="text" id="location' . $bike["id"] . '" name="location" placeholder="Ej: Parque central" required><br><br>
 
-                            <!-- Campos ocultos para la latitud y longitud -->
+                            <p>Distancia a recorrer: <span id="distance' . $bike["id"] . '">0</span> km</p>
+
                             <input type="hidden" id="latitude' . $bike["id"] . '" name="latitude">
                             <input type="hidden" id="longitude' . $bike["id"] . '" name="longitude">
 
-                            <button type="button" onclick="searchLocation(' . $bike["id"] . ')">Buscar ubicación</button><br><br>
+                            <button type="button" onclick="searchLocation(' . $bike["id"] . ')">Calcular distancia</button><br><br>
                             <p id="status' . $bike["id"] . '"></p>
 
-                            <!-- Div para el mapa -->
-                            <div id="map' . $bike["id"] . '" style="height: 400px; width: 100%;"></div>
-                       
+                            <button type="submit" class="btn btn-primary">Confirmar Alquiler</button>
+                        </form>
                     </div>
-                    <div class="modal-footer">
-                        <button type="submit" class="btn btn-primary">Confirmar Alquiler</button>
-
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-                    </div>
-                     </form>
                 </div>
             </div>
         </div>
 
         <script>
-            let map' . $bike["id"] . ';
+            // Coordenadas de origen del SENA
+            const originLat = 1.6154; // Latitud del SENA
+            const originLon = -75.6132; // Longitud del SENA
+
+            // Función para calcular la distancia en km usando la fórmula Haversine
+            function calculateDistance(lat1, lon1, lat2, lon2) {
+                const earthRadius = 6371; // Radio de la Tierra en kilómetros
+
+                const dLat = (lat2 - lat1) * Math.PI / 180;
+                const dLon = (lon2 - lon1) * Math.PI / 180;
+
+                const a = Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+                          Math.cos(lat1 * Math.PI / 180) * Math.cos(lat2 * Math.PI / 180) *
+                          Math.sin(dLon / 2) * Math.sin(dLon / 2);
+
+                const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+                return earthRadius * c; // Distancia en km
+            }
 
             // Función para buscar la ubicación ingresada
             function searchLocation(bikeId) {
                 let location = document.getElementById("location" + bikeId).value;
-
-                // Límite geográfico alrededor de Florencia, Caquetá
-                const bounds = [1.5575, -75.6789, 1.6237, -75.5955]; // Coordenadas aproximadas de los límites de Florencia
 
                 // Si no se ingresa una ubicación, usar "Parque central, Florencia"
                 if (!location) {
@@ -89,39 +96,23 @@ if ($bikes) {
                 }
 
                 if (location) {
-                    // Llamar a la API de geocodificación de OpenStreetMap con límites geográficos
-                    fetch(`https://nominatim.openstreetmap.org/search?format=json&q=${location}&bounded=1&viewbox=${bounds[1]},${bounds[0]},${bounds[3]},${bounds[2]}`)
+                    // Llamar a la API de geocodificación de OpenStreetMap
+                    fetch(`https://nominatim.openstreetmap.org/search?format=json&q=${location}`)
                         .then(response => response.json())
                         .then(data => {
                             if (data && data.length > 0) {
-                                const lat = data[0].lat;
-                                const lon = data[0].lon;
-
-                                // Mostrar resultado en la consola
-                                console.log("Ubicación encontrada:", data[0].display_name, "Latitud:", lat, "Longitud:", lon);
+                                const lat = parseFloat(data[0].lat);
+                                const lon = parseFloat(data[0].lon);
 
                                 // Asignar las coordenadas a los campos ocultos del formulario
                                 document.getElementById("latitude" + bikeId).value = lat;
                                 document.getElementById("longitude" + bikeId).value = lon;
 
+                                // Calcular la distancia
+                                const distance = calculateDistance(originLat, originLon, lat, lon);
+                                document.getElementById("distance" + bikeId).textContent = distance.toFixed(2);
+
                                 document.getElementById("status" + bikeId).innerHTML = "Ubicación encontrada: " + data[0].display_name;
-
-                                // Mostrar el mapa con Leaflet centrado en la ubicación ingresada
-                                if (!map' . $bike["id"] . ') {
-                                    map' . $bike["id"] . ' = L.map("map" + bikeId).setView([lat, lon], 14);
-                                } else {
-                                    map' . $bike["id"] . '.setView([lat, lon], 14);
-                                }
-
-                                // Agregar capa de OpenStreetMap
-                                L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
-                                    attribution: "&copy; <a href=\'https://www.openstreetmap.org/copyright\'>OpenStreetMap</a> contributors"
-                                }).addTo(map' . $bike["id"] . ');
-
-                                // Agregar marcador en la ubicación
-                                L.marker([lat, lon]).addTo(map' . $bike["id"] . ')
-                                    .bindPopup("Ubicación ingresada")
-                                    .openPopup();
                             } else {
                                 document.getElementById("status" + bikeId).innerHTML = "No se encontró la ubicación. Inténtalo de nuevo.";
                             }
@@ -140,4 +131,7 @@ if ($bikes) {
     echo '<p>No hay bicicletas disponibles.</p>';
 }
 ?>
+
 <!-- <button type="submit" form="rentalForm' . $bike["id"] . '" class="btn btn-primary">Confirmar Alquiler</button> -->
+
+

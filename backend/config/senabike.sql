@@ -3,15 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
-<<<<<<< HEAD
--- Tiempo de generación: 25-09-2024 a las 21:14:47
--- Versión del servidor: 10.4.32-MariaDB
--- Versión de PHP: 8.2.12
-=======
 -- Tiempo de generación: 26-09-2024 a las 10:07:08
 -- Versión del servidor: 10.4.32-MariaDB
 -- Versión de PHP: 8.0.30
->>>>>>> aleja
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -158,15 +152,9 @@ CREATE TABLE `rentals` (
   `bike_id` int(11) NOT NULL,
   `user_id` int(11) NOT NULL,
   `date_started` date NOT NULL,
-<<<<<<< HEAD
-  `date_final` int(11) NOT NULL,
-  `origin_start` text NOT NULL,
-  `final_destination` text NOT NULL,
-=======
   `date_final` date NOT NULL,
   `origin_start` varchar(205) NOT NULL,
   `final_destination` varchar(205) NOT NULL,
->>>>>>> aleja
   `discount_id` int(11) NOT NULL,
   `final_price` float NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
@@ -220,12 +208,8 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `role_id`, `region_id`, `name`, `email`, `phone_number`, `password`, `economic_id`) VALUES
-<<<<<<< HEAD
-(1, 1, 1, 'Maria Alejandra', 'prueba@gmail.com', '3209489684', '123', 1);
-=======
 (1, 1, 1, 'Maria Alejandra', 'prueba@gmail.com', '3209489684', '123', 1),
 (2, 2, 4, 'jair', 'a@gmail.com', '22323322332', '123', 0);
->>>>>>> aleja
 
 --
 -- Índices para tablas volcadas
@@ -340,8 +324,6 @@ ALTER TABLE `role`
 --
 
 --
-<<<<<<< HEAD
-=======
 -- Filtros para la tabla `likes`
 --
 ALTER TABLE `likes`
@@ -355,7 +337,6 @@ ALTER TABLE `posts`
   ADD CONSTRAINT `posts_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 --
->>>>>>> aleja
 -- Filtros para la tabla `rentals`
 --
 ALTER TABLE `rentals`

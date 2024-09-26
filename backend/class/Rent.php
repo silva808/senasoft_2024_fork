@@ -20,9 +20,7 @@ class Rent{
             return []; // Retorna un arreglo vacío en caso de error
         }
     }
-<<<<<<< HEAD
-=======
-
+    
     public function SumarPreciosRentalsMesActual() {
         try {
             // Obtener el mes y año actual
@@ -62,15 +60,65 @@ class Rent{
 
     public function rentedBikeByUser($user_id) {
         try {
-            $query = $this->db_connect->prepare("SELECT * FROM rentals INNER JOIN bikes ON rentals.bike_id = bikes.id WHERE rentals.user_id = ? AND rentals.date_started IS NULL");
-            $query->bind_param("ii", $bike_id, $user_id);
+            // Realizar INNER JOIN con la tabla bikes y users
+            $query = $this->db_connect->prepare("SELECT rentals.*, bikes.*, users.name, users.email, users.phone_number 
+            FROM rentals 
+            INNER JOIN bikes ON rentals.bike_id = bikes.id 
+            INNER JOIN users ON rentals.user_id = users.id 
+            WHERE rentals.user_id = ? AND rentals.date_final IS NULL
+            ");
+
+            $query->bind_param("i", $user_id); // Solo necesitas el user_id aquí
             $query->execute();
+    
             $result = $query->get_result();
             $rentals = $result->fetch_all(MYSQLI_ASSOC);
-            return $rentals; // No necesitas el close() aquí
-        } catch (PDOException $e) {
+    
+            return $rentals;
+        } catch (Exception $e) {
             echo "Error: " . $e->getMessage();
+            return [];
         }
->>>>>>> aleja
+    }
+    
+
+      // Método para guardar un alquiler
+      public function saveRental($bike_id, $user_id, $origin_start, $final_destination, $start_date, $total_cost_initial) {
+        try {
+            $query = $this->db_connect->prepare("INSERT INTO rentals (bike_id, user_id, origin_start, final_destination, date_started, initial_price) VALUES (?, ?, ?, ?, ?, ?)");
+            $query->bind_param("iisssd", $bike_id, $user_id, $origin_start, $final_destination, $start_date, $total_cost_initial);
+
+            if ($query->execute()) {
+                return true;
+            } else {
+                return false;
+            }
+        } catch (Exception $e) {
+            echo "Error al guardar el alquiler: " . $e->getMessage();
+            return false;
+        }
+    }
+
+    // Metodo para finalizar el alquiler actualizando los campos faltantes
+    public function finalizeRental($bike_id, $user_id, $current_date) {
+        try {
+            // Preparar la consulta para actualizar la fecha de finalización
+            $query = $this->db_connect->prepare("
+                UPDATE rentals 
+                SET date_final = ? 
+                WHERE bike_id = ? AND user_id = ? AND date_final IS NULL
+            ");
+            $query->bind_param("sii", $current_date, $bike_id, $user_id); // Asignar los valores
+    
+            if ($query->execute()) {
+                return true; // Actualización exitosa
+            } else {
+                return false; // Error en la actualización
+            }
+        } catch (Exception $e) {
+            echo "Error: " . $e->getMessage();
+            return false; // Devolver false si ocurre un error
+        }
+    }
     
 }

@@ -142,21 +142,50 @@ $(document).ready(function() {
         });
     });
 });
+
 // ajax para agregar alquiler de bicicleta
-// validar usuario
 $(document).ready(function(){
-    $('#rentalForm').on('submit', function(e){
-        e.preventDefault();
+    // $('#rentalForm').on('submit', function(e){
+     // Selector dinámico para cada formulario de alquiler
+     $('form[id^="rentalForm"]').on('submit', function(e){
+        e.preventDefault(); // Prevenir que el formulario se envíe de manera tradicional
+        
         $.ajax({
             url: '../backend/process_info/addrentail.php',
             type: 'post',
             data: $(this).serialize(),
             success: function(response){
-                if(response){
+                
+                $('.respuesta').html(response);
                     console.log(response);
                     console.log('funciono');
-                }
+                // if(response){
+                //     console.log(response);
+                //     console.log('funciono');
+                // }
+            },
+            error: function(){
+                console.log('Error en el alquiler');
             }
         });
     });
  })
+
+//  ajax y pregunta de confirmación para entregar bicicleta
+function finalizeRental(bikeId) {
+    if (confirm("¿Estás seguro de que quieres entregar esta bicicleta?")) {
+        // Hacer una petición AJAX para actualizar la fecha final
+        $.ajax({
+            url: '../backend/process_info/finalize_rental.php', // Ruta al script PHP
+            type: 'POST',
+            data: { bikeId: bikeId }, // Enviar el ID de la bicicleta
+            success: function(response) {
+                alert(response); // Mostrar la respuesta del servidor (mensaje de éxito o error)
+                location.reload(); // Recargar la página para actualizar la tabla
+            },
+            error: function() {
+                alert("Hubo un error al finalizar el alquiler. Inténtalo nuevamente.");
+            }
+        });
+    }
+}

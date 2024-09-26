@@ -67,41 +67,18 @@
 
                     <h3 class="text-center mb-4">Alquilar Bicicletas</h3>
                     <div class="row row-gap-3 alquilar-bikes">
-                      <?php include_once '../templates/modalrentals.php'; ?>
+                      <?php  include_once '../templates/modal_rentals.php'; 
+                    //   include_once '../templates/modalrentals_prueba.php'; 
+                      ?>
                     </div>
                 </div>
                 
             <div class="cont-main d-flex flex-column" id="give_bike">
                 <h3 class="p-5">Entregar bicicleta</h3>
+
                 <div class="form-cont d-flex p-5 justify-content-center">
-                    <form>
-                        <!-- Selección de bicicleta -->
-                        <div class="mb-3">
-                            <label for="bike" class="form-label">Bicicleta</label>
-                            <input type="number" class="form-control" id="finalPrice" name="finalPrice" disabled>
-                        </div>
-            
-                        <!-- Selección de destino -->
-                        <div class="mb-3">
-                            <label for="destination" class="form-label">Destino</label>
-                            <select class="form-select" id="bike" name="bike">
-                                <option selected disabled>Selecciona una bicicleta</option>
-                                <option value="1">Trek</option>
-                                <option value="2">Specialized</option>
-                                <option value="3">Giant</option>
-                                <option value="4">Scott</option>
-                            </select>
-                        </div>
-            
-                        <!-- Precio final -->
-                        <div class="mb-3">
-                            <label for="finalPrice" class="form-label">Precio Final</label>
-                            <input type="number" class="form-control" id="finalPrice" name="finalPrice" disabled>
-                        </div>
-            
-                        <!-- Botón de envío -->
-                        <button type="submit" class="btn btn-green">Submit</button>
-                    </form>
+                    <?php include_once '../templates/table_rental_bike.php'; ?>
+                  
                 </div>
             </div>
             <div class="cont-main d-flex flex-column p-3" id="watch_events">
@@ -111,10 +88,9 @@
                     <?php include_once '../templates/postcard.php'; ?>
                 </div>
             </div>
-            
-                
             </main>
         </div>
+        <div class="respuesta"></div>
     </div>
     <!-- js bootstrap -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
