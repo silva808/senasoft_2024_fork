@@ -44,4 +44,24 @@ class Bike{
             $query -> close();
         }
     }
+    // CONSEGUIR LAS BICILETAS QUE ESTAN DISPONIBLES
+    public function getBikesavailability(){
+
+        try {
+            $query = $this -> db_connect -> prepare("SELECT * FROM bikes WHERE availability = 1");
+            $query -> execute();
+            $result = $query -> get_result();
+            $bikes = $result -> fetch_all(MYSQLI_ASSOC);
+            $query -> close();
+
+            if($bikes){
+                return $bikes;
+            }
+
+        } catch (Exception $e) {
+            echo"Error".$e -> getMessage();
+            return false;
+            $query -> close();
+        }
+    }
 }

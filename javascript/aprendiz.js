@@ -35,4 +35,4 @@ buttons.forEach(button => {
 });
 
 // Initially display the first section
-showSection('earnings');
+showSection('rent_bike');
