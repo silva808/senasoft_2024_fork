@@ -1,0 +1,150 @@
+:root{
+    --green: #0B7E0B;
+    --light_green: #00AF00;
+}
+
+a{
+    text-decoration: none;
+    color: black;
+}
+.options {
+    transition: ease-in-out 0.3s;
+}
+.options:hover{
+    cursor: pointer;
+    background-color: var(--green);
+    color: white;
+}
+
+main {
+    height: 100vh; /* Full height of the viewport */
+    overflow: hidden; /* Prevent scrolling on the main element itself */
+    display: flex;
+    flex-direction: column;
+}
+
+.cont-main {
+    flex: none; /* Ensure the .cont-main takes up remaining space */
+    width: 100%;
+    height: 100%;
+    overflow-y: auto; /* Allow vertical scrolling when content overflows */
+}
+
+.form-cont img{
+    width: 20rem;
+}
+
+/* Enfatizar color verde */
+.btn-green {
+    background-color: var(--light_green);
+    border-color: var(--light_green);
+    color: white;
+}
+.btn-green:hover {
+    background-color: var(--light_green);
+    border-color: var(--light_green);
+}
+.form-control:focus {
+    border-color: var(--light_green);
+    box-shadow: 0 0 0 0.25rem rgba(0, 175, 0, 0.25);
+}
+label {
+    color: var(--light_green);
+}
+h2 {
+    color: var(--light_green);
+}
+
+/* Card Styles */
+.event-card {
+    width: 100%;
+    border-radius: 15px;
+    border: var(--green) solid 2px;
+    transition: transform 0.3s ease;
+}
+
+.event-card:hover {
+    transform: translateY(-5px);
+}
+
+.event-card .btn-green {
+    background-color: var(--light_green);
+    border: none;
+    color: white;
+}
+
+.event-card .btn-green:hover {
+    background-color: var(--green);
+}
+
+.event-card .card-title {
+    color: var(--light_green);
+}
+
+.event-card .event-date {
+    color: var(--green);
+    font-weight: bold;
+}
+
+/* Estilo para el botón de "Participando" */
+.btn-gray {
+    background-color: #cccccc;
+    color: #ffffff;
+    cursor: not-allowed;
+}
+
+
+h3 {
+    color: var(--green);
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .event-card {
+        width: 90%;
+    }
+
+    .bike-card {
+        width: 90%;
+    }
+}
+
+/* Bike Card Styles */
+.bike-card {
+    width: 100%;
+    border-radius: 15px;
+    border: var(--green) solid 2px;
+    transition: transform 0.3s ease;
+}
+
+.bike-card img{
+    border-radius: 15px;
+}
+
+.bike-card:hover {
+    transform: translateY(-5px);
+}
+
+.bike-card .btn-green {
+    background-color: var(--light_green);
+    border: none;
+    color: white;
+}
+
+.bike-card .btn-outline-green {
+    border: var(--light_green) solid 1px;
+    color: var(--light_green);
+}
+
+.bike-card .btn-outline-green:hover {
+    background-color: var(--green);
+    color: white;
+}
+
+.bike-card .btn-green:hover {
+    background-color: var(--green);
+}
+
+.bike-card .card-title {
+    color: var(--light_green);
+}

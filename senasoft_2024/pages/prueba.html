@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Formulario con Ubicación Manual y Mapa</title>
+    <!-- Leaflet CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
+    <style>
+        /* Estilo para el mapa */
+        #map {
+            height: 400px;
+            width: 100%;
+        }
+    </style>
+</head>
+<body>
+    <h2>Formulario de Registro con Ubicación Manual</h2>
+    <form id="locationForm" action="/submit" method="POST">
+        
+        <!-- Campo para que el usuario ingrese la ubicación -->
+        <label for="location">Ubicación a la que irá (dirección o lugar):</label>
+        <input type="text" id="location" name="location" placeholder="Ej: Madrid, España" required><br><br>
+
+        <!-- Campos ocultos para la latitud y longitud -->
+        <input type="hidden" id="latitude" name="latitude">
+        <input type="hidden" id="longitude" name="longitude">
+
+        <button type="button" onclick="searchLocation()">Buscar ubicación</button><br><br>
+        <input type="submit" value="Enviar">
+    </form>
+
+    <p id="status"></p>
+
+    <!-- Div para el mapa -->
+    <div id="map"></div>
+
+    <!-- Leaflet JS -->
+    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+    <script>
+        let map;
+
+        // Función para buscar la ubicación ingresada
+        function searchLocation() {
+            const location = document.getElementById('location').value;
+
+            if (location) {
+                // Llamar a la API de geocodificación de OpenStreetMap para obtener las coordenadas
+                fetch(`https://nominatim.openstreetmap.org/search?format=json&q=${location}`)
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data && data.length > 0) {
+                            const lat = data[0].lat;
+                            const lon = data[0].lon;
+
+                            // Asignar las coordenadas a los campos ocultos del formulario
+                            document.getElementById("latitude").value = lat;
+                            document.getElementById("longitude").value = lon;
+
+                            // Mostrar las coordenadas en la consola
+                            console.log("Latitud: " + lat);
+                            console.log("Longitud: " + lon);
+
+                            document.getElementById("status").innerHTML = "Ubicación encontrada: " + data[0].display_name;
+
+                            // Mostrar el mapa con Leaflet centrado en la ubicación ingresada
+                            if (!map) {
+                                map = L.map('map').setView([lat, lon], 13);
+                            } else {
+                                map.setView([lat, lon], 13);
+                            }
+
+                            // Agregar capa de OpenStreetMap
+                            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                                attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+                            }).addTo(map);
+
+                            // Agregar marcador en la ubicación
+                            L.marker([lat, lon]).addTo(map)
+                                .bindPopup('Ubicación ingresada')
+                                .openPopup();
+                        } else {
+                            document.getElementById("status").innerHTML = "No se encontró la ubicación. Inténtalo de nuevo.";
+                        }
+                    })
+                    .catch(error => {
+                        console.error("Error al obtener las coordenadas: ", error);
+                        document.getElementById("status").innerHTML = "Hubo un error al buscar la ubicación.";
+                    });
+            } else {
+                document.getElementById("status").innerHTML = "Por favor, ingresa una ubicación.";
+            }
+        }
+    </script>
+</body>
+</html>
