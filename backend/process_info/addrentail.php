@@ -7,7 +7,7 @@ include_once '../class/Rent.php';
 $bike_id = $_POST['bikeId'];
 $latitude = $_POST['latitude'];
 $longitude = $_POST['longitude'];
-$total_cost_initial = $_POST['totalCost']; 
+// $total_cost_initial = $_POST['totalCost']; 
 $idUser = $_SESSION['idUser'];
 $start_date = date("Y-m-d");
 
@@ -20,7 +20,7 @@ $start_date = date("Y-m-d"); // Fecha actual
 $rentObj = new Rent($conn);
 
 // Llamar al método para guardar el alquiler
-$isSaved = $rentObj->saveRental($bike_id, $idUser, $origin_start, $final_destination, $start_date, $total_cost_initial);
+$isSaved = $rentObj->saveRental($bike_id, $idUser, $origin_start, $final_destination, $start_date);
 
 if ($isSaved) {
     // Redirigir o mostrar mensaje de éxito

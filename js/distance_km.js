@@ -44,10 +44,10 @@ function searchLocation(bikeId) {
                     const distance = calculateDistance(originLat, originLon, lat, lon);
                     document.getElementById("distance" + bikeId).textContent = distance.toFixed(2);
 
-                    const rentPrice = parseFloat(document.getElementById("rentPrice" + bikeId).value); // Obtener el precio de alquiler este bikeId
+                    // const rentPrice = parseFloat(document.getElementById("rentPrice" + bikeId).value); // Obtener el precio de alquiler este bikeId
                     // Calcular el costo total
-                    const totalCost = distance * rentPrice; // Multiplicar la distancia por el precio de alquiler
-                    document.getElementById("totalCost" + bikeId).textContent = "$" + totalCost.toFixed(2);
+                    // const totalCost = distance * rentPrice; // Multiplicar la distancia por el precio de alquiler
+                    // document.getElementById("totalCost" + bikeId).textContent = "$" + totalCost.toFixed(2);
                     
                     // ubicacion Encontrada 
                     document.getElementById("status" + bikeId).innerHTML = "Ubicación encontrada: " + data[0].display_name;
